@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarja</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  .tarja {
+    width: 100%; max-width: 900px; box-sizing: border-box;
+    background: linear-gradient(90deg, #ff6905, #ff7e47);
+    color: #ffffff;
+    padding: 18px 28px;
+    border-radius: 40px;
+    box-shadow: 0 4px 18px #ff690555;
+    font-size: 22px;
+    font-weight: 600;
+    white-space: nowrap; overflow: hidden;
+    display: flex; align-items: center;
+  }
+  #cursor {
+    display: inline-block; width: 3px; margin-left: 3px;
+    background: #ffffff;
+    animation: piscar 0.8s steps(1) infinite;
+    height: 1em; vertical-align: middle;
+  }
+  @keyframes piscar { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+  @media (max-width: 480px) { .tarja { border-radius: 0; padding: 14px 18px; } }
+</style>
+</head>
+<body>
+  <div class="tarja"><span id="texto"></span><span id="cursor"></span></div>
+  <script>
+    const frases = ["Radio OldHabblet!"];
+    const elTexto = document.getElementById("texto");
+    let fraseIndex = 0, charIndex = 0, apagando = false;
+    function loop() {
+      const fraseAtual = frases[fraseIndex];
+      if (!apagando) {
+        charIndex++;
+        elTexto.textContent = fraseAtual.substring(0, charIndex);
+        if (charIndex === fraseAtual.length) { apagando = true; setTimeout(loop, 2500); return; }
+        setTimeout(loop, 70);
+      } else {
+        charIndex--;
+        elTexto.textContent = fraseAtual.substring(0, charIndex);
+        if (charIndex === 0) { apagando = false; fraseIndex = (fraseIndex + 1) % frases.length; setTimeout(loop, 400); return; }
+        setTimeout(loop, 35);
+      }
+    }
+    loop();
+  </script>
+</body>
+</html>
